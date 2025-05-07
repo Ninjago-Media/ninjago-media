@@ -31,7 +31,7 @@ const Index = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {allSeasons.map((season) => (
+          {allSeasons.slice(0, 4).map((season) => (
             <SeasonCard key={season.id} season={season} />
           ))}
         </div>

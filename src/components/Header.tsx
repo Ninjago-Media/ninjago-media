@@ -23,7 +23,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <span className="text-2xl font-bold bg-gradient-to-r from-ninjago-red via-ninjago-blue to-ninjago-green bg-clip-text text-transparent">
-            NINJAGO<span className="text-ninjago-gold">WATCH</span>
+            NINJAGO<span className="text-ninjago-gold">MEDIA</span>
           </span>
         </Link>
         
@@ -32,7 +32,7 @@ const Header = () => {
             Home
           </Link>
           <Link to="/seasons" className="text-foreground/80 hover:text-foreground transition-colors">
-            Seasons
+            All Seasons
           </Link>
           <Link to="/favorites" className="text-foreground/80 hover:text-foreground transition-colors">
             Favorites

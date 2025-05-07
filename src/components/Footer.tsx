@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-ninjago-red via-ninjago-blue to-ninjago-green bg-clip-text text-transparent">
-              NINJAGO<span className="text-ninjago-gold">WATCH</span>
+              NINJAGO<span className="text-ninjago-gold">MEDIA</span>
             </h3>
             <p className="text-sm text-foreground/70">
               Your ultimate streaming platform for all things Ninjago.
@@ -81,7 +81,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 pt-4 border-t border-border/40 text-center text-sm text-foreground/60">
-          <p>© {new Date().getFullYear()} NinjagoWatch. This is a fan-made site and is not affiliated with LEGO® Group.</p>
+          <p>© {new Date().getFullYear()} Ninjago Media. This is a fan-made site and is not affiliated with LEGO® Group.</p>
           <p className="mt-2">LEGO® NINJAGO® is a trademark of the LEGO Group.</p>
         </div>
       </div>

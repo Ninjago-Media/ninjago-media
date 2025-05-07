@@ -5,13 +5,15 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import EpisodeCard from "../components/EpisodeCard";
-import { getSeasonById } from "../data/seasons";
+import SeasonCard from "../components/SeasonCard";
+import { getSeasonById, getAllSeasons } from "../data/seasons";
 
 const Season = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const seasonId = parseInt(id || "1");
   const season = getSeasonById(seasonId);
+  const allSeasons = getAllSeasons();
 
   useEffect(() => {
     if (!season) {
@@ -22,6 +24,12 @@ const Season = () => {
   if (!season) {
     return null;
   }
+
+  // Get other seasons to recommend
+  const recommendedSeasons = allSeasons
+    .filter(s => s.id !== seasonId)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -54,26 +62,11 @@ const Season = () => {
           <h2 className="text-2xl font-bold">More Seasons</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {Array.from({ length: 4 }).map((_, index) => {
-            const nextSeasonId = ((seasonId + index) % 4) + 1;
-            const nextSeason = getSeasonById(nextSeasonId);
-            if (nextSeason && nextSeason.id !== seasonId) {
-              return (
-                <div key={nextSeason.id} className="animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
-                  <img
-                    src={nextSeason.image}
-                    alt={nextSeason.title}
-                    className="w-full aspect-video object-cover rounded-md mb-2"
-                    onClick={() => navigate(`/season/${nextSeason.id}`)}
-                    style={{ cursor: "pointer" }}
-                  />
-                  <h3 className="font-bold">{nextSeason.title}</h3>
-                  <p className="text-sm text-foreground/70">{nextSeason.year}</p>
-                </div>
-              );
-            }
-            return null;
-          })}
+          {recommendedSeasons.map((s, index) => (
+            <div key={s.id} className="animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+              <SeasonCard season={s} />
+            </div>
+          ))}
         </div>
       </section>
       
