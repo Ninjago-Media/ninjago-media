@@ -62,7 +62,10 @@ const Header = () => {
                 placeholder="Search..."
                 className="pl-3 pr-8 py-1 rounded-md bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ninjago-gold"
                 autoFocus
-                onBlur={() => setSearchQuery("") || setIsSearchOpen(false)}
+                onBlur={() => {
+                  setSearchQuery("");
+                  setIsSearchOpen(false);
+                }}
               />
               <button 
                 type="submit" 
