@@ -47,7 +47,9 @@ const Season = () => {
       <section className="container mx-auto px-4 mt-12">
         <div className="mb-6">
           <h2 className="text-2xl font-bold">Episodes</h2>
-          <p className="text-foreground/70 mt-2">Season {season.id} • {season.year}</p>
+          <p className="text-foreground/70 mt-2">
+            {season.isSpecial ? 'Special' : `Season ${season.id}`} • {season.year}
+          </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {season.episodes.map((episode) => (

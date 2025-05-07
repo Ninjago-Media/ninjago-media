@@ -24,6 +24,9 @@ const AllSeasons = () => {
     season.year.includes(searchTerm)
   );
 
+  const regularSeasons = filteredSeasons.filter(season => !season.isSpecial);
+  const specialSeasons = filteredSeasons.filter(season => season.isSpecial);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
@@ -63,21 +66,41 @@ const AllSeasons = () => {
         </div>
       </div>
       
-      {/* Seasons Grid */}
+      {/* Regular Seasons Grid */}
       <section className="container mx-auto px-4 mt-8">
+        <h2 className="text-2xl font-bold mb-6">Seasons</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredSeasons.map((season) => (
+          {regularSeasons.map((season) => (
             <SeasonCard key={season.id} season={season} />
           ))}
         </div>
         
-        {filteredSeasons.length === 0 && (
-          <div className="text-center py-12">
-            <h3 className="text-xl font-semibold mb-2">No seasons found</h3>
+        {regularSeasons.length === 0 && filteredSeasons.length > 0 && specialSeasons.length > 0 && (
+          <div className="text-center py-8">
+            <h3 className="text-xl font-semibold mb-2">No regular seasons found</h3>
             <p>Try adjusting your search criteria.</p>
           </div>
         )}
       </section>
+
+      {/* Specials Section */}
+      {specialSeasons.length > 0 && (
+        <section className="container mx-auto px-4 mt-16">
+          <h2 className="text-2xl font-bold mb-6">Specials</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {specialSeasons.map((special) => (
+              <SeasonCard key={special.id} season={special} />
+            ))}
+          </div>
+        </section>
+      )}
+      
+      {filteredSeasons.length === 0 && (
+        <div className="container mx-auto px-4 text-center py-12">
+          <h3 className="text-xl font-semibold mb-2">No content found</h3>
+          <p>Try adjusting your search criteria.</p>
+        </div>
+      )}
       
       <Footer />
     </div>

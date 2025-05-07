@@ -1,4 +1,3 @@
-
 export interface Episode {
   id: number;
   title: string;
@@ -16,6 +15,7 @@ export interface Season {
   episodes: Episode[];
   image: string;
   color: string;
+  isSpecial?: boolean;
 }
 
 // Helper function to generate placeholder thumbnails for variety
@@ -32,7 +32,6 @@ const getPlaceholderImage = (index: number): string => {
     "https://images.unsplash.com/photo-1535303311164-664fc9ec6532",
     "https://images.unsplash.com/photo-1568480289356-5a75d0fd47fc",
     "https://images.unsplash.com/photo-1506157786151-b8491531f063",
-    "https://images.unsplash.com/photo-1551698618-1dfe5d97d256",
     "https://images.unsplash.com/photo-1513151233558-d860c5398176",
     "https://images.unsplash.com/photo-1504253163759-c23fccaebb55",
     "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
@@ -49,7 +48,7 @@ const getSeasonColor = (index: number): string => {
   return colors[index % colors.length];
 };
 
-// Generate all 18 seasons with episodes
+// Generate all seasons with episodes
 const generateAllSeasons = (): Season[] => {
   const allSeasons: Season[] = [];
   
@@ -67,14 +66,13 @@ const generateAllSeasons = (): Season[] => {
     "Secrets of the Forbidden Spinjitzu",
     "Prime Empire",
     "Master of the Mountain",
-    "The Island",
     "Seabound",
-    "Crystalized Part 1",
-    "Crystalized Part 2",
-    "Dragons Rising"
+    "Crystalized",
+    "Dragons Rising Season 1", 
+    "Dragons Rising Season 2",
   ];
   
-  const years = ["2011", "2012", "2014", "2015", "2015", "2016", "2017", "2018", "2018", "2019", "2019", "2020", "2020", "2021", "2021", "2022", "2022", "2023"];
+  const years = ["2011", "2012", "2014", "2015", "2015", "2016", "2017", "2018", "2018", "2019", "2019", "2020", "2020", "2021", "2022", "2023", "2023"];
   
   const seasonDescriptions = [
     "After Lord Garmadon's defeat, a new evil rises. The Serpentine, a race of snake-people, are unleashed and plotting to claim Ninjago as their own.",
@@ -90,19 +88,18 @@ const generateAllSeasons = (): Season[] => {
     "Following their battles with the Oni, the ninja travel to a remote pyramid where they find Professor Clutch Powers and awaken an ancient evil.",
     "When Jay's favorite video game Prime Empire mysteriously returns with gamers going missing, the ninjas enter the digital world to investigate.",
     "The ninja travel to the kingdom of Shintaro where they discover a race of underground dwelling Geckles and Munce who have been enslaved by evil skull sorcerers.",
-    "The ninja travel to a mysterious island to rescue Master Wu, Misako, and Clutch Powers.",
     "Nya's elemental powers begin to evolve, which becomes crucial when an ancient sea creature named Wojira is awakened.",
-    "The ninja reunite after a long absence, only to discover that a vengeful new entity known as the Crystal King seeks ancient, dark power.",
-    "The ninja continue their fight against the Crystal King as they try to prevent the rise of the Overlord.",
-    "A new generation of heroes rise to defend Ninjago City from ancient dragon forces awakened after a thousand years."
+    "The ninja reunite after a long absence to face the Crystal King, who seeks ancient, dark power. Later, they attempt to prevent the return of the Overlord.",
+    "A new generation of heroes rise to defend Ninjago City from ancient dragon forces awakened after a thousand years.",
+    "The Dragons Rising team continues their journey against the dragon forces threatening Ninjago.",
   ];
   
   const episodesPerSeason = [
-    13, 13, 8, 10, 10, 10, 10, 10, 10, 4, 30, 16, 16, 4, 16, 12, 18, 10
+    13, 13, 8, 10, 10, 10, 10, 10, 10, 4, 30, 16, 16, 16, 30, 10, 10
   ];
   
   // Create all seasons with episodes
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 17; i++) {
     const seasonNumber = i + 1;
     const episodes: Episode[] = [];
     
@@ -130,6 +127,51 @@ const generateAllSeasons = (): Season[] => {
       color: `ninjago-${getSeasonColor(i)}`
     });
   }
+  
+  // Add "The Island" as a special
+  allSeasons.push({
+    id: 14, // Using season number to keep it in chronological order
+    title: "The Island",
+    year: "2021",
+    description: "The ninja travel to a mysterious island to rescue Master Wu, Misako, and Clutch Powers.",
+    episodes: [
+      {
+        id: 1,
+        title: "Episode 1",
+        description: "Special: The Island, Episode 1. The ninja face new challenges and enemies.",
+        thumbnail: `${getPlaceholderImage(13 * 10 + 1)}?w=600&h=400&fit=crop`,
+        duration: `${Math.floor(20 + Math.random() * 5)}m`,
+        videoUrl: `/episodes/special01e01.mp4`
+      },
+      {
+        id: 2,
+        title: "Episode 2",
+        description: "Special: The Island, Episode 2. The ninja face new challenges and enemies.",
+        thumbnail: `${getPlaceholderImage(13 * 10 + 2)}?w=600&h=400&fit=crop`,
+        duration: `${Math.floor(20 + Math.random() * 5)}m`,
+        videoUrl: `/episodes/special01e02.mp4`
+      },
+      {
+        id: 3,
+        title: "Episode 3",
+        description: "Special: The Island, Episode 3. The ninja face new challenges and enemies.",
+        thumbnail: `${getPlaceholderImage(13 * 10 + 3)}?w=600&h=400&fit=crop`,
+        duration: `${Math.floor(20 + Math.random() * 5)}m`,
+        videoUrl: `/episodes/special01e03.mp4`
+      },
+      {
+        id: 4,
+        title: "Episode 4",
+        description: "Special: The Island, Episode 4. The ninja face new challenges and enemies.",
+        thumbnail: `${getPlaceholderImage(13 * 10 + 4)}?w=600&h=400&fit=crop`,
+        duration: `${Math.floor(20 + Math.random() * 5)}m`,
+        videoUrl: `/episodes/special01e04.mp4`
+      }
+    ],
+    image: `${getPlaceholderImage(13)}?w=800&h=450&fit=crop`,
+    color: `ninjago-${getSeasonColor(13)}`,
+    isSpecial: true
+  });
   
   return allSeasons;
 };
