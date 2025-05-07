@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Season from "./pages/Season";
 import Episode from "./pages/Episode";
 import AllSeasons from "./pages/AllSeasons";
+import Movies from "./pages/Movies";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/seasons" element={<AllSeasons />} />
           <Route path="/season/:id" element={<Season />} />
           <Route path="/season/:seasonId/episode/:episodeId" element={<Episode />} />
+          <Route path="/movies" element={<Movies />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

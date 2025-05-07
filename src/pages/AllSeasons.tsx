@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SeasonCard from "../components/SeasonCard";
@@ -7,12 +8,33 @@ import { getAllSeasons } from "../data/seasons";
 
 const AllSeasons = () => {
   const allSeasons = getAllSeasons();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
+  
+  // Update search term when URL search param changes
+  useEffect(() => {
+    const currentSearch = searchParams.get("search");
+    if (currentSearch) {
+      setSearchTerm(currentSearch);
+    }
+  }, [searchParams]);
   
   const filteredSeasons = allSeasons.filter(season => 
     season.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     season.year.includes(searchTerm)
   );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    
+    // Update URL search params
+    if (value) {
+      setSearchParams({ search: value });
+    } else {
+      setSearchParams({});
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -28,25 +50,16 @@ const AllSeasons = () => {
         </div>
       </div>
       
-      {/* Search and Filter */}
+      {/* Search */}
       <div className="container mx-auto px-4 mt-8">
-        <div className="bg-card rounded-lg p-4 flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="w-full md:w-1/3">
-            <input
-              type="text"
-              placeholder="Search seasons..."
-              className="w-full px-4 py-2 bg-background border border-border rounded-md"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-sm">Sort By:</span>
-            <select className="px-4 py-2 bg-background border border-border rounded-md">
-              <option value="newest">Release Year</option>
-              <option value="alphabetical">Alphabetical</option>
-            </select>
-          </div>
+        <div className="bg-card rounded-lg p-4">
+          <input
+            type="text"
+            placeholder="Search seasons..."
+            className="w-full px-4 py-2 bg-background border border-border rounded-md"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
         </div>
       </div>
       

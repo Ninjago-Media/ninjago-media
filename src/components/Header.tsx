@@ -1,9 +1,14 @@
 
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +18,14 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/seasons?search=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+    }
+  };
 
   return (
     <header 
@@ -34,17 +47,38 @@ const Header = () => {
           <Link to="/seasons" className="text-foreground/80 hover:text-foreground transition-colors">
             All Seasons
           </Link>
-          <Link to="/favorites" className="text-foreground/80 hover:text-foreground transition-colors">
-            Favorites
+          <Link to="/movies" className="text-foreground/80 hover:text-foreground transition-colors">
+            Movies
           </Link>
         </nav>
 
         <div className="flex items-center space-x-4">
-          <button className="text-foreground/80 hover:text-foreground transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
+          {isSearchOpen ? (
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                className="pl-3 pr-8 py-1 rounded-md bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ninjago-gold"
+                autoFocus
+                onBlur={() => setSearchQuery("") || setIsSearchOpen(false)}
+              />
+              <button 
+                type="submit" 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2"
+              >
+                <Search className="h-4 w-4 text-foreground/70" />
+              </button>
+            </form>
+          ) : (
+            <button 
+              className="text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsSearchOpen(true)}
+            >
+              <Search className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
     </header>
