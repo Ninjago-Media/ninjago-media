@@ -48,7 +48,7 @@ const Episode = () => {
               {prevEpisode && (
                 <Link 
                   to={`/season/${sId}/episode/${prevEpisode.id}`}
-                  className="px-4 py-2 bg-secondary/50 hover:bg-secondary rounded-md text-sm"
+                  className="px-4 py-1 h-8 bg-secondary/50 hover:bg-secondary rounded-md text-sm flex items-center justify-center"
                 >
                   Previous Episode
                 </Link>
@@ -56,7 +56,7 @@ const Episode = () => {
               {nextEpisode && (
                 <Link 
                   to={`/season/${sId}/episode/${nextEpisode.id}`}
-                  className="px-4 py-2 bg-ninjago-red hover:bg-ninjago-red/80 rounded-md text-sm"
+                  className="px-4 py-1 h-8 bg-ninjago-red hover:bg-ninjago-red/80 rounded-md text-sm flex items-center justify-center"
                 >
                   Next Episode
                 </Link>

@@ -20,7 +20,7 @@ const SeasonCard = ({ season }: SeasonCardProps) => {
       />
       <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
         <span className={`px-2 py-1 bg-black/50 text-xs rounded-md mb-2 inline-block ${season.isSpecial ? 'bg-ninjago-gold/70' : ''}`}>
-          {season.isSpecial ? 'Special' : `Season ${season.id}`}
+          {season.isSpecial ? (season.isPilot ? 'Pilot' : 'Special') : `Season ${season.id}`}
         </span>
         <h3 className="text-lg font-bold group-hover:text-ninjago-gold transition-colors">
           {season.title}
