@@ -66,6 +66,8 @@ export const VideoSyncProvider = ({ children }: { children: React.ReactNode }) =
     // Simulate connection establishment
     const timer = setTimeout(() => {
       setIsConnected(true);
+      // Simulate having another participant when a room is created or joined
+      setParticipants(prev => Math.max(2, prev));
       toast.success(status === 'host' ? 'Room created! Share the link to invite others.' : 'Connected to room!');
     }, 1000);
 
@@ -88,16 +90,29 @@ export const VideoSyncProvider = ({ children }: { children: React.ReactNode }) =
     const newRoomId = Math.random().toString(36).substring(2, 10);
     setRoomId(newRoomId);
     setStatus('host');
-    setSearchParams({ room: newRoomId });
+    
+    // Ensure we're updating the URL properly
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set('room', newRoomId);
+    setSearchParams(newSearchParams);
     
     // In a real app, we would initialize WebRTC signaling here
     return newRoomId;
   };
 
   const joinRoom = (id: string) => {
+    if (!id.trim()) {
+      toast.error("Invalid room ID");
+      return;
+    }
+    
     setRoomId(id);
     setStatus('viewer');
-    setSearchParams({ room: id });
+    
+    // Ensure we're updating the URL properly
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set('room', id);
+    setSearchParams(newSearchParams);
     
     // In a real app, we would connect to the WebRTC signaling server here
   };
@@ -109,8 +124,9 @@ export const VideoSyncProvider = ({ children }: { children: React.ReactNode }) =
     setParticipants(1);
     
     // Remove room parameter from URL
-    searchParams.delete('room');
-    setSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete('room');
+    setSearchParams(newSearchParams);
   };
 
   const sendVideoAction = (action: VideoAction, timestamp?: number) => {

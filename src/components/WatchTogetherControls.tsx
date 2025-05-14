@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Users, Link as LinkIcon, Copy, LogOut } from "lucide-react";
+import { Users, Copy, LogOut } from "lucide-react";
 import { toast } from "@/components/ui/sonner";
 
 const WatchTogetherControls = () => {
@@ -29,8 +29,14 @@ const WatchTogetherControls = () => {
   };
   
   const handleCreateRoom = () => {
-    createRoom();
-    setDialogOpen(false);
+    try {
+      createRoom();
+      setDialogOpen(false);
+      toast.success("Watch party created! Share the link with friends.");
+    } catch (error) {
+      console.error("Error creating room:", error);
+      toast.error("Failed to create watch party. Please try again.");
+    }
   };
   
   const handleJoinRoom = () => {
@@ -126,6 +132,11 @@ const WatchTogetherControls = () => {
               placeholder="Enter room ID" 
               value={joinRoomId}
               onChange={(e) => setJoinRoomId(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleJoinRoom();
+                }
+              }}
             />
             <Button 
               variant="secondary"
