@@ -78,8 +78,6 @@ const VideoPlayer = ({ videoUrl, title }: VideoPlayerProps) => {
     }
   };
 
-  // In a real app with actual video files, this would be a video element
-  // For this demo, we're using a placeholder that simulates video controls
   return (
     <div className="video-container relative aspect-video bg-black/80 rounded-lg overflow-hidden">
       {isLoading ? (
@@ -87,45 +85,25 @@ const VideoPlayer = ({ videoUrl, title }: VideoPlayerProps) => {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-ninjago-gold"></div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-full bg-black/40">
-          {/* Video placeholder */}
-          <div className="text-center px-4 mb-8">
-            <video 
-              ref={videoRef}
-              className="w-full h-full hidden" // Hidden because it's just a placeholder
-              onPlay={handlePlay}
-              onPause={handlePause}
-              onSeeked={handleSeek}
-            />
-            <h2 className="text-2xl font-bold mb-4">{title}</h2>
-            <p className="text-sm text-foreground/60 mb-6">
-              {isSynced ? (
-                isHost ? "You are hosting this watch party" : "You joined a watch party"
-              ) : (
-                `Upload your video file to: ${videoUrl}`
-              )}
-            </p>
-          </div>
+        <div className="relative w-full h-full">
+          {/* Actual video element - now visible */}
+          <video 
+            ref={videoRef}
+            className="w-full h-full object-contain"
+            src={videoUrl}
+            controls={!isViewer || !isConnected}
+            onPlay={handlePlay}
+            onPause={handlePause}
+            onSeeked={handleSeek}
+          />
           
-          {/* Video controls */}
-          <div className="flex items-center gap-4 mt-2">
-            <Button 
-              variant="outline" 
-              size="icon" 
-              className="rounded-full bg-black/30 border-white/20 hover:bg-white/20"
-              onClick={isPlaying ? handlePause : handlePlay}
-              disabled={isViewer && !isConnected}
-            >
-              {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-            </Button>
-            
-            {isSynced && (
-              <div className="flex items-center gap-2 px-3 py-1 bg-black/50 rounded-full">
-                <Users className="h-4 w-4" />
-                <span className="text-xs">{participants}</span>
-              </div>
-            )}
-          </div>
+          {/* Overlay controls for watch party */}
+          {isSynced && (
+            <div className="absolute top-2 right-2 flex items-center gap-2 px-3 py-1 bg-black/50 rounded-full">
+              <Users className="h-4 w-4" />
+              <span className="text-xs">{participants}</span>
+            </div>
+          )}
           
           {isViewer && (
             <div className="absolute top-2 left-2 bg-ninjago-red px-2 py-1 rounded text-xs">
