@@ -5,44 +5,32 @@
 
 @layer base {
   :root {
-    --background: 220 20% 10%;
-    --foreground: 0 0% 95%;
-
-    --card: 224 20% 15%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 224 20% 15%;
-    --popover-foreground: 0 0% 95%;
-
-    --primary: 210 100% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 30% 20%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 220 40% 20%;
-    --muted-foreground: 220 10% 70%;
-
-    --accent: 12 80% 50%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5% 25%;
-    --input: 240 5% 25%;
-    --ring: 240 5% 65%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --ninjago-red: 0 78% 60%;
+    --ninjago-blue: 206 83% 60%;
+    --ninjago-green: 120 70% 50%;
+    --ninjago-black: 0 0% 20%;
+    --ninjago-white: 0 0% 90%;
+    --ninjago-gold: 43 80% 60%;
+    --ninjago-orange: 30 95% 60%;
   }
 }
 
@@ -50,34 +38,31 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
 
-/* Netflix-style hover effects */
-.hover-scale {
-  @apply transition-transform duration-300 ease-in-out;
-}
+@layer components {
+  .hover-scale {
+    @apply transition-all duration-300 hover:scale-[1.03];
+  }
+  
+  .card-glow {
+    @apply hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-shadow duration-300;
+  }
 
-.hover-scale:hover {
-  @apply scale-105 z-10;
-}
+  .episode-title {
+    @apply text-base font-medium text-foreground line-clamp-1;
+  }
+  
+  .animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-in-out forwards;
+  }
 
-.card-glow:hover {
-  @apply shadow-lg shadow-accent/20;
-}
-
-.episode-title {
-  @apply text-lg font-bold transition-colors duration-300;
-}
-
-.hover-scale:hover .episode-title {
-  @apply text-accent;
-}
-
-.video-container {
-  @apply relative w-full overflow-hidden bg-black/40;
-  aspect-ratio: 16 / 9;
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 }
