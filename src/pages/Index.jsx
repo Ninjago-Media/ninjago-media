@@ -1,10 +1,31 @@
 
+import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import SeasonCard from "../components/SeasonCard";
 import { seasons, getAllSeasons } from "../data/seasons";
+
+// Movie data for the movies section
+const featuredMovies = [
+  {
+    id: "lego-ninjago-movie",
+    title: "The LEGO Ninjago Movie",
+    image: "https://m.media-amazon.com/images/M/MV5BNDI3MDljMDQtNDExNS00NmI4LTgzOTYtNjA5OGVmOGY0ZmZiXkEyXkFqcGdeQXVyNjk5NDA3OTk@._V1_.jpg",
+    description: "The battle for Ninjago City calls to action young Master Builder Lloyd, aka the Green Ninja, along with his friends, who are all secret ninja warriors.",
+    year: "2017",
+    duration: "1h 41m"
+  },
+  {
+    id: "day-of-the-departed",
+    title: "Day of the Departed",
+    image: "https://m.media-amazon.com/images/M/MV5BNGUzODU1NjAtY2JhZS00NzIzLTgzNmUtYTU2NWVkNTJhZjI1XkEyXkFqcGdeQXVyMjM5NDQzNTk@._V1_.jpg",
+    description: "The ninja reunite to celebrate the Day of the Departed, but Cole accidentally unleashes a group of previously defeated villains.",
+    year: "2016",
+    duration: "44m"
+  }
+];
 
 const Index = () => {
   const allSeasons = getAllSeasons();
@@ -68,6 +89,43 @@ const Index = () => {
                 </div>
               </div>
             </Link>
+          ))}
+        </div>
+      </section>
+      
+      {/* New Movies Section */}
+      <section className="container mx-auto px-4 mt-12 mb-12">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Featured Movies</h2>
+          <Link to="/movies" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+            View All
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {featuredMovies.map((movie) => (
+            <div key={movie.id} className="flex flex-col bg-card rounded-lg overflow-hidden hover:shadow-xl transition-all hover-scale group">
+              <div className="relative h-48">
+                <img
+                  src={movie.image}
+                  alt={movie.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
+                <div className="absolute bottom-2 right-2 bg-ninjago-red text-white px-2 py-1 rounded text-xs">
+                  {movie.duration}
+                </div>
+              </div>
+              <div className="p-4">
+                <div className="flex justify-between mb-2">
+                  <h3 className="text-xl font-bold group-hover:text-ninjago-gold transition-colors">{movie.title}</h3>
+                  <span className="text-sm text-foreground/70">{movie.year}</span>
+                </div>
+                <p className="text-sm text-foreground/70">{movie.description}</p>
+                <Link to="/movies" className="inline-block mt-3 text-ninjago-red hover:underline text-sm">
+                  Watch Now
+                </Link>
+              </div>
+            </div>
           ))}
         </div>
       </section>

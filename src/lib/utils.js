@@ -1,7 +1,5 @@
 
-import { clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
+// Simple utility function without dependencies
 export function cn(...inputs) {
-  return twMerge(clsx(inputs))
+  return inputs.filter(Boolean).join(" ");
 }
