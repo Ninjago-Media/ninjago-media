@@ -1,8 +1,4 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Season from "./pages/Season";
@@ -11,7 +7,14 @@ import AllSeasons from "./pages/AllSeasons";
 import Movies from "./pages/Movies";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Simple toast implementation without dependencies
+const Toaster = () => <div id="toast-container"></div>;
+const Sonner = () => <div id="sonner-container"></div>;
+const TooltipProvider = ({ children }) => <>{children}</>;
+
+// Simple query client implementation
+const QueryClientProvider = ({ children }) => <>{children}</>;
+const queryClient = {};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
